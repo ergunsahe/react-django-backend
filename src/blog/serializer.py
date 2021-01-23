@@ -1,5 +1,3 @@
-# from django.db.models import fields
-from django.db.models import fields
 from rest_framework import  serializers
 from .models import Post, Comment, Like, PostView
 
@@ -11,6 +9,7 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = ( "content",  "user", "time")
         read_only_fields = ["post","time", "user"]
+        
         
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
@@ -30,6 +29,8 @@ class PostSerializer(serializers.ModelSerializer):
             'slug',
            
         )
+        read_only_fields = ["id","publish_date", "author", 'comment_count', 'view_count', 'like_count', 'slug']
+        
 class PostDetailSerializer(serializers.ModelSerializer):
     comments = CommentSerializer(many= True)
     class Meta:
@@ -49,16 +50,19 @@ class PostDetailSerializer(serializers.ModelSerializer):
             'slug',
             'comments'
         )
+        read_only_fields = ["id","publish_date", "author", 'comment_count', 'view_count', 'like_count', 'slug', 'comments']
         
 class LikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Like
         fields = ("user", "post")
+        # read_only_fields = ["user", "post"]
         
 class PostViewSerializer(serializers.ModelSerializer):
     class Meta:
         model = PostView
         fields = ("user", "post", "time")
+        # read_only_fields = ["user", "post", "time"]
         
 
 

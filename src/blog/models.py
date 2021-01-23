@@ -19,7 +19,9 @@ class Post(models.Model):
     slug = models.SlugField(blank=True, unique=True)
     
     class Meta:
-        ordering = ['publish_date']
+        ordering = ['-publish_date']
+    
+    
     
     def __str__(self):
         return self.title
@@ -39,6 +41,11 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     content = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-time']
+    
+    
     
     def __str__(self):
         return self.user.username

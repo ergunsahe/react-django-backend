@@ -45,10 +45,8 @@ def post_create(request):
 @permission_classes([AllowAny])
 def post_get_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    view_qs = PostView.objects.filter(post=post, user=request.user)
-    if view_qs:
-        pass
-    else:
+    view_qs = PostView.objects.filter( user=request.user.id, post=post)
+    if not view_qs:
         serializer = PostViewSerializer(data=request.data)
         request.data["user"] = request.user.id
         request.data["post"] = post.id
@@ -72,17 +70,20 @@ def post_update_delete(request, slug):
             serializer = PostSerializer(post, data=request.data)
             
             if serializer.is_valid():
-                # serializer.save(teacher=request.user)
-                serializer.save()
+                
+                serializer.save(author=request.user)
                 data={
-                    "message": "Student updated successfully!"
+                    "message": "Post updated successfully!"
                 }
                 return Response(data)  
             return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
         
         elif request.method == 'DELETE':
             post.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            data={
+                    "message": "Post deleted successfully!"
+                }
+            return Response(data, status=status.HTTP_204_NO_CONTENT)
     else:
         data= {
             "message":"You are not authorized"
@@ -93,6 +94,8 @@ def post_update_delete(request, slug):
     
     
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def comment_view(request, slug):
     post = get_object_or_404(Post, slug=slug)
     
@@ -107,11 +110,14 @@ def comment_view(request, slug):
 
 
 @api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def like_view(request, slug):
     post = get_object_or_404(Post, slug=slug)
     
     if request.method == "POST":
         like_qs = Like.objects.filter(user=request.user, post=post)
+        
         if like_qs:
             like_qs.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
