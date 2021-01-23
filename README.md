@@ -1,4 +1,4 @@
-# Django_Quiz_App_Restframework
+# Django_React_Backend
 
 - Firstly open cloned repository your VS Code and create a virtual environment with: py -m venv yourvirtualenvironmentname
 - After that install dependecies with: pip install -r .\requirements.txt
