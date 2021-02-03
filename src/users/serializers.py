@@ -36,23 +36,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     
 
 class ProfileSerializer(serializers.ModelSerializer):
-    # first_name = serializers.CharField()
-    # last_name = serializers.CharField()
-    # country = serializers.CharField()
-    # address = serializers.CharField()
-    # phone = serializers.CharField()
-    # bio = serializers.CharField()
+   
     class Meta:
         model = Profile
         fields = ["first_name", "last_name", "country", "address", "phone", "bio", "id" ]
         # read_only_fields = ["id", "user"]
         
-    # def update(self, instance, validated_data):
-    #     instance.first_name = validated_data.get('first_name', instance.first_name)
-    #     instance.last_name = validated_data.get('last_name', instance.last_name)
-    #     instance.counrty = validated_data.get('country', instance.country)
-    #     instance.address = validated_data.get('address', instance.address)
-    #     instance.phone = validated_data.get('phone', instance.phone)
-    #     instance.bio = validated_data.get('bio', instance.bio)
-    #     instance.save()
-    #     return instance
+    

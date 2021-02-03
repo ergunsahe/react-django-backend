@@ -29,6 +29,8 @@ def post_create(request):
     if request.method == 'POST':
         serializer = PostSerializer(data=request.data)
         request.data['author'] = request.user.id
+        if request.data['image'] == '':
+            request.data['image'] = 'https://www.codingdojo.com/blog/wp-content/uploads/FULL-STACK-DEV-GRAPH-2.jpg'
         if serializer.is_valid():
             
             serializer.save(author=request.user)
@@ -70,7 +72,7 @@ def post_update_delete(request, slug):
             serializer = PostSerializer(post, data=request.data)
             
             if serializer.is_valid():
-                
+              
                 serializer.save(author=request.user)
                 data={
                     "message": "Post updated successfully!"
@@ -117,7 +119,6 @@ def like_view(request, slug):
     
     if request.method == "POST":
         like_qs = Like.objects.filter(user=request.user, post=post)
-        
         if like_qs:
             like_qs.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
