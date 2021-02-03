@@ -2,6 +2,8 @@ from rest_framework import   serializers
 from django.contrib.auth.models import User
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
+from dj_rest_auth.serializers import TokenSerializer
+from django.contrib.auth import get_user_model
 from .models import Profile
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -43,3 +45,14 @@ class ProfileSerializer(serializers.ModelSerializer):
         # read_only_fields = ["id", "user"]
         
     
+class UserTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'email', 'username')
+
+
+class CustomTokenSerializer(TokenSerializer):
+    user = UserTokenSerializer(read_only=True)
+
+    class Meta(TokenSerializer.Meta):
+        fields = ('key', 'user')
