@@ -6,4 +6,13 @@
 - Finally open your browser and write: http://localhost:8000/
 
 
-# To run app own local computer please fork repo before changes for deploying on Heroku
+# You can check codes from Heroku with Postman, you can see urls , views, serializers and models in src folder.
+# Links for heroku:
+- https://rd-restful-blog.herokuapp.com/list/
+- https://rd-restful-blog.herokuapp.com/auth/login/ 
+- https://rd-restful-blog.herokuapp.com/users/register/
+- https://rd-restful-blog.herokuapp.com/<:slug>/detail/
+- https://rd-restful-blog.herokuapp.com/<:slug>/update/
+- https://rd-restful-blog.herokuapp.com/create/
+- https://rd-restful-blog.herokuapp.com/<:slug>/like/
+- https://rd-restful-blog.herokuapp.com/<:slug>/comment/
